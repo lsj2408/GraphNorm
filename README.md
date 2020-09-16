@@ -135,51 +135,8 @@ For evaluation, we use the dumped model checkpoints and report the mean and stan
 
 - Use provided **pre-trained models**
 
-  We provide **the TOP-1 model on OGBG-MOLHIV** datasets [here](https://1drv.ms/u/s!AgZyC7AzHtDBbZO5a6g6esOcuoQ?e=qGKkLg). The training command is provided below.
+  We provide **the TOP-1 model on OGBG-MOLHIV** datasets [here](https://1drv.ms/u/s!AgZyC7AzHtDBbZO5a6g6esOcuoQ?e=qGKkLg). 
 
-  ```shell
-  #!/usr/bin/env bash
-  
-  set -e
-  
-  GPU=0
-  NORM=gn
-  BS=128
-  DP=0.1
-  EPOCH=50
-  Layer=6
-  LR=0.0001
-  HIDDEN=300
-  DS=ogbg-molhiv
-  LOG_PATH=../../log/"$NORM"-BS-"$BS"-EPOCH-"$EPOCH"-L-"$Layer"-HIDDEN-"$HIDDEN"-LR-"$LR"-decay/
-  MODEL_PATH=../../model/"$NORM"-BS-"$BS"-EPOCH-"$EPOCH"-L-"$Layer"-HIDDEN-"$HIDDEN"-LR-"$LR"-decay/
-  DATA_PATH=../../data/dataset/
-  
-  
-  for seed in {1..10}; do
-      FILE_NAME=learn-"$DS"-gcn-seed-"$seed"
-      python ../../src/train_dgl_ogb.py \
-          --gpu $GPU \
-          --epoch $EPOCH \
-          --dropout $DP \
-          --model GCN_dp \
-          --batch_size $BS \
-          --n_layers $Layer \
-          --lr $LR \
-          --n_hidden $HIDDEN \
-          --seed $seed \
-          --dataset $DS \
-          --log_dir $LOG_PATH \
-          --model_path $MODEL_PATH \
-          --data_dir $DATA_PATH \
-          --exp $FILE_NAME \
-          --norm_type $NORM \
-          --log_norm
-  done
-  
-  ```
-
-## Results
 
 - **Training Performance**
 
