@@ -183,7 +183,7 @@ For evaluation, we use the dumped model checkpoints and report the mean and stan
 
 - **Training Performance**
 
-![Fig-Training Performance](README.assets/Fig-Training Performance.png)
+![Fig-Training Performance](https://github.com/lsj2408/GraphNorm/blob/master/README.assets/Fig-Training%20Performance.png)
 
 - **Test Performance**
 
@@ -200,19 +200,19 @@ For evaluation, we use the dumped model checkpoints and report the mean and stan
 | 7     | GCN+virtual node  | $0.7599\pm0.0119$     |
 | 8     | GIN               | $0.7558\pm0.0140$     |
 
-![image-20200916210558256](README.assets/image-20200916210558256.png)
+![Fig-Test Performance](https://github.com/lsj2408/GraphNorm/blob/master/README.assets/Fig-Test%20Performance.png)
 
 - **Ablation Study**
 
-![Fig-Ablation Study](README.assets/Fig-Ablation Study.png)
+![Fig-Ablation Study](https://github.com/lsj2408/GraphNorm/blob/master/README.assets/Fig-Ablation%20Study.png)
 
 - **Visualizations of Singular value distribution**
 
-![Fig-Singular Value Distribution](README.assets/Fig-Singular Value Distribution.png)
+![Fig-Singular Value Distribution](https://github.com/lsj2408/GraphNorm/blob/master/README.assets/Fig-Singular%20Value%20Distribution.png)
 
 - **Visualizations of Noisy Batch-level Statistics**
 
-![Fig-Batch Level Statistics](README.assets/Fig-Batch Level Statistics.png)
+![Fig-Batch Level Statistics](https://github.com/lsj2408/GraphNorm/blob/master/README.assets/Fig-Batch%20Level%20Statistics.png)
 
 ## Citation
 
