@@ -135,10 +135,8 @@ For evaluation, we use the dumped model checkpoints and report the mean and stan
 
 - Use provided **pre-trained models**
 
-  We provide **the TOP-1 model on OGBG-MOLHIV** datasets [here](https://1drv.ms/u/s!AgZyC7AzHtDBbZO5a6g6esOcuoQ?e=qGKkLg). The training command is provided below.
+  We provide **the TOP-1 model on OGBG-MOLHIV** datasets [here](https://1drv.ms/u/s!AgZyC7AzHtDBbZO5a6g6esOcuoQ?e=qGKkLg). The training and evaluation command is provided below.
 
-  **NOTE**: The model is a 6-layer GCN with GraphNorm, so you need to set the model parameter 'n_layers' as 6 during evaluation.
-  
   ```shell
   #!/usr/bin/env bash
   
@@ -178,8 +176,34 @@ For evaluation, we use the dumped model checkpoints and report the mean and stan
           --norm_type $NORM \
           --log_norm
   done
-  
   ```
+  
+  ```shell
+  #!/usr/bin/env bash
+  
+  set -e
+  
+  GPU=0
+  L=6
+  NORM=gn
+  MODEL=GCN_dp
+  DS=ogbg-molhiv
+  BS=128
+  MODEL_PATH=../../model/[The path name of the Pre-trained Model]/
+  DATA_PATH=../../data/dataset/
+  
+  python ../../src/evaluate_ogb.py \
+          --gpu $GPU \
+          --n_layers $L \
+          --dataset $DS \
+          --model_path $MODEL_PATH \
+          --data_dir $DATA_PATH \
+          --norm_type $NORM \
+          --model $MODEL \
+          --batch_size $BS
+  ```
+  
+  
 
 ## Results
 
