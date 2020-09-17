@@ -14,6 +14,9 @@ Sincerely appreciate your suggestions on our work!
 
 GraphNorm is a principled normalization method that accelerates the GNNs training on graph classification tasks, where the key idea is to normalize all nodes for each individual graph with a learnable shift. Theoretically, we show that GraphNorm serves as a preconditioner that smooths the distribution of the graph aggregation's spectrum, and the learnable shift is used to improve the expressiveness of the networks. Empirically, we conduct experiments on several popular benckmark datasets, including the recently released [Open Graph Benchmark](https://ogb.stanford.edu/docs/leader_graphprop/). Results on datasets with different scale consistently show that GNNs with GraphNorm converge much faster and achieve better generalization performance.
 
+
+![Fig-Overview](https://github.com/lsj2408/GraphNorm/blob/master/README.assets/Fig-Overview.png)
+
 ## Installation
 
 1. Clone this repository
