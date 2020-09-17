@@ -139,3 +139,61 @@ class GCN(nn.Module):
         score_over_layer += self.drop(self.linears_prediction(pooled_h))
 
         return score_over_layer
+
+class GCN_dp(nn.Module):
+    def __init__(self, num_layers, hidden_dim,
+                 output_dim, final_dropout, learn_eps, graph_pooling_type,
+                 norm_type):
+        super(GCN_dp, self).__init__()
+        self.num_layers = num_layers
+        self.learn_eps = learn_eps
+
+        self.ginlayers = torch.nn.ModuleList()
+        self.atom_encoder = AtomEncoder(hidden_dim)
+
+        self.bond_layers = torch.nn.ModuleList()
+
+        for layer in range(self.num_layers - 1):
+
+            mlp = MLP(1, hidden_dim, hidden_dim * 2, hidden_dim, norm_type)
+
+            self.ginlayers.append(
+                GCNConv(ApplyNodeFunc(mlp, norm_type), 0, self.learn_eps)
+            )
+            self.bond_layers.append(
+                BondEncoder(hidden_dim)
+            )
+
+        self.linears_prediction = nn.Linear(hidden_dim, output_dim)
+
+        self.drop = final_dropout
+
+        if graph_pooling_type == 'sum':
+            self.pool = SumPooling()
+        elif graph_pooling_type == 'mean':
+            self.pool = AvgPooling()
+        elif graph_pooling_type == 'max':
+            self.pool = MaxPooling()
+        else:
+            raise NotImplementedError
+
+
+    def forward(self, g, h_node, h_edge):
+        h_n = self.atom_encoder(h_node)
+        split_list = g.batch_num_nodes
+
+        for i in range(self.num_layers - 1):
+            x = h_n
+            h_e = self.bond_layers[i](h_edge)
+            h_n = self.ginlayers[i](g, split_list, h_n, h_e)
+
+            if i != self.num_layers - 2:
+                h_n = F.dropout(F.relu(h_n), p=self.drop, training=self.training)
+
+            h_n += x
+
+        score_over_layer = 0
+        pooled_h = self.pool(g, h_n)
+        score_over_layer += F.dropout(self.linears_prediction(pooled_h), p=self.drop, training=self.training)
+
+        return score_over_layer
