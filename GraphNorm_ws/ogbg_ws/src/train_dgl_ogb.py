@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 
 from dgl_model.gin_all import GIN
-from dgl_model.gcn_all import GCN
+from dgl_model.gcn_all import GCN, GCN_dp
 
 from torch.utils.data import DataLoader
 
@@ -96,7 +96,7 @@ def task_data(args, dataset=None):
 def task_model(args, dataset):
 
     #  step 1: prepare model
-    assert args.model in ['GIN', 'GCN']
+    assert args.model in ['GIN', 'GCN', 'GCN_dp']
     if args.model == 'GIN':
         model = GIN(
             args.n_layers, args.n_mlp_layers,
@@ -108,6 +108,15 @@ def task_model(args, dataset):
         )
     elif args.model == 'GCN':
         model = GCN(
+            args.n_layers,
+            args.n_hidden,
+            dataset.num_tasks,
+            args.dropout, args.learn_eps,
+            args.graph_pooling_type,
+            args.norm_type
+        )
+    elif args.model == 'GCN_dp':
+        model = GCN_dp(
             args.n_layers,
             args.n_hidden,
             dataset.num_tasks,
