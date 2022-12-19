@@ -20,7 +20,7 @@ class Norm(nn.Module):
             return self.norm(tensor)
         elif self.norm is None:
             return tensor
-        batch_list = graph.batch_num_nodes
+        batch_list = graph.batch_num_nodes()
         batch_size = len(batch_list)
         batch_list = torch.Tensor(batch_list).long().to(tensor.device)
         batch_index = torch.arange(batch_size).to(tensor.device).repeat_interleave(batch_list)
